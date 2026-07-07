@@ -27,7 +27,7 @@ As such, the purpose of this project is to provide an in-depth exploration of th
 
 Our exhibit will be built using a modern, interactive web stack designed for smooth animations and component-based architecture:
 
-* **React.ts:** Serves as the primary framework for this project. This is to leverage its component-based architecture and make the creation of graphical elements, as well as the implementation of their individual characteristics and behavior, much easier.
+* **React:** Serves as the primary framework for this project. This is to leverage its component-based architecture and make the creation of graphical elements, as well as the implementation of their individual characteristics and behavior, much easier.
 * **Vite:** Used as the development environment due to its very fast setup and efficient compilation. Additionally, its ability to easily set up a local server and reflect code changes in real time would be useful during the testing stage of development.
 * **Framer Motion and Tailwind CSS:** Handles the animations and styling of the elements in the project. Aside from their compatibility with React, the former has a vast library of animation presets that are applicable and could easily be implemented in the project.
 
