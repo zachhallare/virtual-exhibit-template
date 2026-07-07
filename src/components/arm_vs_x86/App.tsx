@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import LandingPage from "./LandingPage";
-import CategoryPage from "./CategoryPage";
+import CategoryPage from "./CategoryPage.tsx";
+import "../../styles/arm_vs_x86/index.css";
 
 type View = { type: "landing" } | { type: "categories"; arch: "arm" | "x86" };
 
