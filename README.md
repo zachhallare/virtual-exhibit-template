@@ -1,6 +1,6 @@
 # Computer Architecture Virtual Exhibit 2026: "Computer Architecture are Forever"
 
-**Website Link:** https://github.com/zachhallare/CSARCH2-S01-G9(https://zachhallare.github.io/virtual-exhibit-template/arm_vs_x86/
+**Website Link:** https://zachhallare.github.io/virtual-exhibit-template/arm_vs_x86/
 
 **GitHub Repository:** [https://github.com/zachhallare/CSARCH2-S01-G9](https://github.com/zachhallare/CSARCH2-S01-G9)
 
