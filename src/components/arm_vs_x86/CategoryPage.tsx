@@ -106,6 +106,20 @@ function ChipButton({
 }) {
     const [hovered, setHovered] = useState(false);
 
+    const traceStyle: React.CSSProperties = hovered
+        ? {
+              strokeDasharray: "0.15 1",
+              strokeDashoffset: "0",
+              animation: "card-trace 2s linear infinite",
+              opacity: 1,
+          }
+        : {
+              strokeDasharray: "0.15 1",
+              strokeDashoffset: "1",
+              opacity: 0,
+              transition: "opacity 0.3s ease",
+          };
+
     return (
         <motion.div
             layout
@@ -122,27 +136,29 @@ function ChipButton({
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-            {/* Rotating conic-gradient trace */}
-            <div
-                className="absolute -inset-px rounded-xl pointer-events-none"
-                style={{
-                    opacity: hovered ? 1 : 0,
-                    transition: "opacity 0.3s ease",
-                    zIndex: 2,
-                    padding: 1.5,
-                    filter: hovered
-                        ? `drop-shadow(0 0 3px ${accentColor}) drop-shadow(0 0 8px ${accentColor})`
-                        : "none",
-                    background: `conic-gradient(from 0deg, transparent 0%, #ffffff 8%, ${accentColor} 16%, transparent 32%)`,
-                    animation: hovered
-                        ? "spin-border 2s linear infinite"
-                        : "none",
-                    WebkitMask:
-                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                    WebkitMaskComposite: "xor",
-                    maskComposite: "exclude",
-                }}
-            />
+            <svg
+                className="absolute inset-0 w-full h-full rounded-xl overflow-visible pointer-events-none"
+                style={{ zIndex: 2 }}
+            >
+                <rect
+                    x="0.75"
+                    y="0.75"
+                    width="calc(100% - 1.5px)"
+                    height="calc(100% - 1.5px)"
+                    rx="11"
+                    ry="11"
+                    fill="none"
+                    stroke={hovered ? "#ffffff" : "transparent"}
+                    strokeWidth="1.5"
+                    pathLength="1"
+                    style={{
+                        filter: hovered
+                            ? `drop-shadow(0 0 3px ${accentColor}) drop-shadow(0 0 8px ${accentColor})`
+                            : "none",
+                        ...traceStyle,
+                    }}
+                />
+            </svg>
 
             <ChipPins accentColor={accentColor} />
 
@@ -578,8 +594,6 @@ function CategoryPage({
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="min-h-screen bg-pcb flex flex-col items-center py-10 px-4"
         >
-            <style>{`@keyframes spin-border { to { transform: rotate(360deg); } }`}</style>
-
             <AnimatePresence mode="wait">
                 {!mounted ? (
                     <motion.div
