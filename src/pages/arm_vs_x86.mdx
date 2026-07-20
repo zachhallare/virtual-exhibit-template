@@ -8,7 +8,6 @@ readingTime: "67 minutes"
 
 import LandingPage from "../components/arm_vs_x86/LandingPage.tsx";
 import CategoryPage from "../components/arm_vs_x86/CategoryPage.tsx";
-import FlashcardDeckShowcase from "../components/arm_vs_x86/FlashcardDeckShowcase.tsx";
 import "../styles/arm_vs_x86/index.css";
 import "../styles/refs.css";
 
@@ -53,16 +52,6 @@ This page highlights specialized topics tailored to x86 performance and history 
 
 <div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
     <CategoryPage client:load arch="x86" />
-</div>
-<br />
-<br />
-## **Overview Page**
-<br />
-This page highlights general information between ARM and x86 through standalone
-flashcards.
-
-<div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0 bg-[#0f1117]">
-    <FlashcardDeckShowcase client:load />
 </div>
 
 <br />
