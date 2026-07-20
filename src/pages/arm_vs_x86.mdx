@@ -6,18 +6,39 @@ author: "Co, Adrian Nathaniel; Hallare, Zach Benedict; Javier, David Lorenz; Lee
 readingTime: "67 minutes"
 ---
 
-import App from "../components/arm_vs_x86/App.tsx";
+import LandingPage from "../components/arm_vs_x86/LandingPage.tsx";
+import CategoryPage from "../components/arm_vs_x86/CategoryPage.tsx";
+import FlashcardDeckShowcase from "../components/arm_vs_x86/FlashcardDeckShowcase.tsx";
 import "../styles/arm_vs_x86/index.css";
 import "../styles/refs.css";
-
 
 This interactive exhibit lets you explore and compare two dominant computer architectures — **ARM** and **x86** — through a flashcard-based interface. Click on either architecture to browse categories like Overview, Performance, Use Cases, Key Devices, Pros and Cons, and a side-by-side Comparison Table. Each card flips to reveal detailed information, animated charts, and interactive lists, making it easy to understand the differences between RISC and CISC design philosophies at your own pace.
 
 <br />
 <br />
 
-<div class="arm-vs-x86-page">
-    <App client:load />
+## **Landing Page Showcase**
+The entry point allows users to choose an architecture for deeper exploration and features dynamic trivia regarding both ARM and x86 silicon.
+<div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
+    <LandingPage client:load />
+</div>
+
+## **Category Page Showcase - ARM**
+Selecting an architecture opens a dedicated category page highlighting specialized topics tailored to ARM ecosystem dynamics.
+<div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
+    <CategoryPage client:load arch="arm" />
+</div>
+
+## **Category Page Showcase - x86**
+Selecting an architecture opens a dedicated category page highlighting specialized topics tailored to x86 performance and history.
+<div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
+    <CategoryPage client:load arch="x86" />
+</div>
+
+## **Flashcards Showcase**
+A standalone preview of the overview flashcards for both architectures. 
+<div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0 bg-[#0f1117]">
+    <FlashcardDeckShowcase client:load />
 </div>
 
 <br />
