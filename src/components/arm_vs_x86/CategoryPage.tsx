@@ -373,13 +373,6 @@ function CategoryPage({ arch, onBack }: { arch: "arm" | "x86"; onBack?: () => vo
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <button
-              onClick={() => setSelectedCategory(null)}
-              className="group border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] text-gray-400 hover:text-white transition-all rounded-lg px-3 py-1.5 mb-6 flex items-center gap-2 text-xs font-mono tracking-wide shadow-md backdrop-blur-sm"
-            >
-              <span className="inline-block transition-transform group-hover:-translate-x-0.5">←</span> BACK TO CATEGORIES
-            </button>
-
             <SingleFlashcard
               key={selectedCategory}
               card={card}
@@ -397,13 +390,6 @@ function CategoryPage({ arch, onBack }: { arch: "arm" | "x86"; onBack?: () => vo
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <button
-              onClick={() => onBack?.()}
-              className="group border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] text-gray-400 hover:text-white transition-all rounded-lg px-3 py-1.5 mb-6 flex items-center gap-2 text-xs font-mono tracking-wide shadow-md backdrop-blur-sm"
-            >
-              <span className="inline-block transition-transform group-hover:-translate-x-0.5">←</span> HARDWARE ARCHITECTURES
-            </button>
-
             <div
               className="rounded-2xl p-6 sm:p-8 mb-8 relative overflow-hidden backdrop-blur-md shadow-2xl"
               style={{ 
