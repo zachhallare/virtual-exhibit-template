@@ -45,7 +45,7 @@ function CardShell({
           <span className="text-lg font-bold text-white font-mono tracking-wide">{categoryLabel}</span>
         </div>
         <div className="mx-6 mb-1 h-px" style={{ backgroundColor: `${accentColor}15` }} />
-        <div className="px-6 py-4 min-h-[720px] flex flex-col justify-center text-gray-300 text-sm">
+        <div className="px-6 py-4 min-h-[720px] flex flex-col justify-center text-gray-300 text-sm flashcard-content">
           {children}
         </div>
       </div>
@@ -95,8 +95,8 @@ function Flashcard({
         </div>
 
         <div
-          className="rounded-xl absolute inset-0"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", overflowY: "auto" }}
+          className="rounded-xl absolute inset-0 flashcard-content"
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
           <CardShell accentColor={accentColor} categoryLabel={categoryLabel}>
             {card.back}

@@ -154,3 +154,14 @@
 @utility animate-icon-pulse {
     animation: icon-pulse 0.55s ease-out forwards;
 }
+
+/* ─── Scrollbar hiding for flashcard content ──────────────────────────────────── */
+.flashcard-content {
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.flashcard-content::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, and Opera */
+}
