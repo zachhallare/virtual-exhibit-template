@@ -12,31 +12,55 @@ import FlashcardDeckShowcase from "../components/arm_vs_x86/FlashcardDeckShowcas
 import "../styles/arm_vs_x86/index.css";
 import "../styles/refs.css";
 
-This interactive exhibit lets you explore and compare two dominant computer architectures — **ARM** and **x86** — through a flashcard-based interface. Click on either architecture to browse categories like Overview, Performance, Use Cases, Key Devices, Pros and Cons, and a side-by-side Comparison Table. Each card flips to reveal detailed information, animated charts, and interactive lists, making it easy to understand the differences between RISC and CISC design philosophies at your own pace.
+## **Introduction**
+
+<br />
+
+This interactive exhibit lets you explore and compare two dominant computer architectures — **ARM** and **x86** — through a flashcard-based interface. Click on either architecture to browse categories like **Overview**, **Performance**, **Use Cases**, **Key Devices**, **Pros and Cons**, and a side-by-side **Comparison Table**. Each card flips to reveal detailed information, animated charts, and interactive lists, making it easy to understand the differences between RISC and CISC design philosophies at your own pace.
 
 <br />
 <br />
 
-## **Landing Page Showcase**
-The entry point allows users to choose an architecture for deeper exploration and features dynamic trivia regarding both ARM and x86 silicon.
+## **Landing Page**
+
+<br />
+This page introduces users to the rivalry between ARM and x86 silicon and
+features dynamic trivia regarding both of them.
+
 <div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
     <LandingPage client:load />
 </div>
 
-## **Category Page Showcase - ARM**
-Selecting an architecture opens a dedicated category page highlighting specialized topics tailored to ARM ecosystem dynamics.
+<br />
+<br />
+
+## **Category Page - ARM**
+
+<br />
+This page highlights specialized topics tailored to ARM ecosystem dynamics
+through flashcards.
+
 <div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
     <CategoryPage client:load arch="arm" />
 </div>
+<br />
+<br />
+## **Category Page - x86**
 
-## **Category Page Showcase - x86**
-Selecting an architecture opens a dedicated category page highlighting specialized topics tailored to x86 performance and history.
+<br />
+
+This page highlights specialized topics tailored to x86 performance and history through flashcards.
+
 <div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0">
     <CategoryPage client:load arch="x86" />
 </div>
+<br />
+<br />
+## **Overview Page**
+<br />
+This page highlights general information between ARM and x86 through standalone
+flashcards.
 
-## **Flashcards Showcase**
-A standalone preview of the overview flashcards for both architectures. 
 <div class="arm-vs-x86-page border border-white/10 rounded-2xl overflow-hidden my-8 relative z-0 bg-[#0f1117]">
     <FlashcardDeckShowcase client:load />
 </div>
@@ -45,7 +69,9 @@ A standalone preview of the overview flashcards for both architectures.
 <br />
 <div class="refs">
 
-## References
+## **References**
+
+<br />
 
 **Benchmark Results for Comparison**
 
