@@ -270,12 +270,12 @@ The Mid-Milestone checklist items were assessed against the final codebase. The 
 | File | Description |
 | --- | --- |
 | `App.tsx` | Root component; manages routing between the Landing Page and Category Page using Framer Motion's `AnimatePresence` |
-| `LandingPage.tsx` | Entry screen with a custom SVG circuit board background, animated CPU chip icons for ARM and x86, and a VS badge � circuit traces glow in the architecture's accent color on hover |
+| `LandingPage.tsx` | Entry screen with a custom SVG circuit board background, animated CPU chip icons for ARM and x86, and a VS badge — circuit traces glow in the architecture's accent color on hover |
 | `CategoryPage.tsx` | Post-selection screen displaying a 2x3 grid of `ChipButton` cards for six content categories; transitions to a flashcard view on selection, with a skeleton loading state on first mount |
-| `FlashcardDeck.tsx` | Flip-card component using CSS `preserve-3d` perspective and Framer Motion `rotateY` � front shows the architecture name, back shows the selected category's content |
+| `FlashcardDeck.tsx` | Flip-card component using CSS `preserve-3d` perspective and Framer Motion `rotateY` — front shows the architecture name, back shows the selected category's content |
 | `AnimatedBars.tsx` | Animated horizontal comparison bars driven by Framer Motion; ARM and x86 bars animate from 0% to their target width with a staggered delay on render |
 | `data.ts` | Centralized data file holding all architecture content (overview, performance metrics, use cases, key devices, pros/cons, comparison table) for both ARM and x86, typed with TypeScript interfaces |
-| `index.css` | Full design system � custom Tailwind v4 `@theme` tokens, `bg-pcb` PCB-grid background, skeleton shimmer keyframe, circuit-flow SVG animation, card trace animation, and dot/icon pulse effects |
+| `index.css` | Full design system — custom Tailwind v4 `@theme` tokens, `bg-pcb` PCB-grid background, skeleton shimmer keyframe, circuit-flow SVG animation, card trace animation, and dot/icon pulse effects |
 
 ### Features Implemented vs. Mid-Milestone Checklist
 
