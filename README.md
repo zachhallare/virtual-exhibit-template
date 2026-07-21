@@ -62,7 +62,7 @@ The component is fully **mobile-responsive**. On smaller screens, the two main c
 
 ---
 
-## Tentative Style Guide Snapshot
+## Tentative Style Guide Snapshot (Proposal Initial Design Created in Canva)
 
 The visual design of the exhibit utilizes a modern, sleek aesthetic fitting for a deep dive into computer architecture. Cards will feature intuitive navigation (left/right arrows) and expanding animations to handle large amounts of text smoothly.
 
