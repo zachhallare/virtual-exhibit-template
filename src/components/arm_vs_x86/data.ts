@@ -55,7 +55,7 @@ export const armData: ArchitectureData = {
   ],
   keyDevices: [
     { name: "Apple iPhone 16 Pro", description: "Apple A18 Pro chip - 6-core CPU, 6-core GPU, 16-core Neural Engine" },
-    { name: "Apple Watch Series 9", description: "Apple S10 SiP - Dual-core CPU with 4-core Neural Engine" },
+    { name: "Apple Watch Series 10", description: "Apple S10 SiP - Dual-core CPU with 4-core Neural Engine" },
     { name: "Samsung Galaxy S25 Ultra", description: "Qualcomm Snapdragon 8 Elite for Galaxy - Custom ARM-based processor" },
     { name: "Google Pixel 10 Pro", description: "Google Tensor G5 - Custom ARM-based processor" },
     { name: "AWS Graviton 4", description: "ARM Neoverse V2-based processor for cloud computing" },
