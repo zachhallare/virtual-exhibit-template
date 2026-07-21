@@ -270,16 +270,16 @@ The Mid-Milestone checklist items were assessed against the final codebase. The 
 | File | Description |
 | --- | --- |
 | `App.tsx` | Root component; manages routing between the Landing Page and Category Page using Framer Motion's `AnimatePresence` |
-| `LandingPage.tsx` | Entry screen with a custom SVG circuit board background, animated CPU chip icons for ARM and x86, and a VS badge � circuit traces glow in the architecture's accent color on hover |
+| `LandingPage.tsx` | Entry screen with a custom SVG circuit board background, animated CPU chip icons for ARM and x86, and a VS badge — circuit traces glow in the architecture's accent color on hover |
 | `CategoryPage.tsx` | Post-selection screen displaying a 2x3 grid of `ChipButton` cards for six content categories; transitions to a flashcard view on selection, with a skeleton loading state on first mount |
-| `FlashcardDeck.tsx` | Flip-card component using CSS `preserve-3d` perspective and Framer Motion `rotateY` � front shows the architecture name, back shows the selected category's content |
+| `FlashcardDeck.tsx` | Flip-card component using CSS `preserve-3d` perspective and Framer Motion `rotateY` — front shows the architecture name, back shows the selected category's content |
 | `AnimatedBars.tsx` | Animated horizontal comparison bars driven by Framer Motion; ARM and x86 bars animate from 0% to their target width with a staggered delay on render |
 | `data.ts` | Centralized data file holding all architecture content (overview, performance metrics, use cases, key devices, pros/cons, comparison table) for both ARM and x86, typed with TypeScript interfaces |
-| `index.css` | Full design system � custom Tailwind v4 `@theme` tokens, `bg-pcb` PCB-grid background, skeleton shimmer keyframe, circuit-flow SVG animation, card trace animation, and dot/icon pulse effects |
+| `index.css` | Full design system — custom Tailwind v4 `@theme` tokens, `bg-pcb` PCB-grid background, skeleton shimmer keyframe, circuit-flow SVG animation, card trace animation, and dot/icon pulse effects |
 
 ### Features Implemented vs. Mid-Milestone Checklist
 
-- **Responsive layout polish (320px screens):** COMPLETE. The flashcard enforces `min-h-[720px]` which forces vertical scrolling at small widths, with scrollbars intentionally hidden via `-ms-overflow-style: none` and `scrollbar-width: none`. The comparison table uses `min-w-[450px]` inside an `overflow-x-auto` wrapper � it scrolls horizontally but does not break layout. Performance bar labels use fixed `w-9` (36px) and `w-14` (56px) widths that may crowd the available space at 320px. *(File: `FlashcardDeck.tsx:48`, `AnimatedBars.tsx:26,43`, `CategoryPage.tsx:239`)*
+- **Responsive layout polish (320px screens):** COMPLETE. The flashcard enforces `min-h-[720px]` which forces vertical scrolling at small widths, with scrollbars intentionally hidden via `-ms-overflow-style: none` and `scrollbar-width: none`. The comparison table uses `min-w-[450px]` inside an `overflow-x-auto` wrapper it scrolls horizontally but does not break layout. Performance bar labels use fixed `w-9` (36px) and `w-14` (56px) widths that may crowd the available space at 320px. *(File: `FlashcardDeck.tsx:48`, `AnimatedBars.tsx:26,43`, `CategoryPage.tsx:239`)*
 
 - **Comparison Table column highlight:** NOT IMPLEMENTED. Both `armData` and `x86Data` share the exact same `comparisonTable` array reference (`data.ts:22-32,81,132`). The `ComparisonTable` component renders both columns with hard-coded symmetrical colors (`CategoryPage.tsx:243-244`) and does not visually emphasize the active architecture's column.
 
@@ -295,7 +295,7 @@ The Mid-Milestone checklist items were assessed against the final codebase. The 
 
 ## Challenges
 
-- Making the comparison table column highlight work was difficult because both `armData` and `x86Data` share a single `comparisonTable` array reference. Adding a visual distinction would have required either duplicating the data or restructuring the `ComparisonTable` component to accept a separate highlighting prop � neither felt clean enough to commit to.
+- Making the comparison table column highlight work was difficult because both `armData` and `x86Data` share a single `comparisonTable` array reference. Adding a visual distinction would have required either duplicating the data or restructuring the `ComparisonTable` component to accept a separate highlighting prop neither felt clean enough to commit to.
 - The `min-h-[720px]` on the flashcard body created a tension between having enough room for all content categories and fitting comfortably on a 320px-wide viewport. With six different category layouts (overview text, animated bars, use case lists, device cards, pros/cons grids, comparison table), finding a single height that worked for all without excessive empty space was not possible.
 - Touch-device hover states remained unresolved because the entire visual feedback system (border trace animation, chip pin glow, accent background tint, box-shadow glow) was architected around `mouseenter`/`mouseleave` events. Porting this to touch would have required either Framer Motion's `whileTap` variants or a touch-detection polyfill, neither of which mapped cleanly onto the existing `hovered` state pattern.
 - Hiding flashcard scrollbars to preserve the aesthetic meant that users on small screens cannot tell the content is scrollable. The trade-off between visual polish and discoverability was never fully resolved.
@@ -305,20 +305,20 @@ The Mid-Milestone checklist items were assessed against the final codebase. The 
 
 ## Aha Moments
 
-- The GitHub Actions deployment was surprisingly simple to set up once we realized Astro's `astro.config.mjs` just needs `site` and `base` to match the GitHub Pages URL pattern � the `actions/deploy-pages@v5` action handles the rest.
+- The GitHub Actions deployment was surprisingly simple to set up once we realized Astro's `astro.config.mjs` just needs `site` and `base` to match the GitHub Pages URL pattern the `actions/deploy-pages@v5` action handles the rest.
 - We noticed that even though the comparison table column highlight wasn't implemented, the symmetrical design actually works well for side-by-side comparison. Both architectures get equal visual weight, and the hover row highlight still guides the eye.
 - The hidden scrollbar approach on the flashcard content isn't ideal for discoverability, but it does make the card look like a polished UI component rather than a raw scrollable container. On desktop the content fits without scrolling for most categories, so the tradeoff is only painful at 320px.
-- We realized late in the project that the `flashcard-content` overflow model works fine for the back-of-card content (which is always scrollable), but the front side (architecture name centered) doesn't scroll. The CSS class is shared, which means the front side gets unnecessary `overflow-y: auto` � harmless but not clean.
+- We realized late in the project that the `flashcard-content` overflow model works fine for the back-of-card content (which is always scrollable), but the front side (architecture name centered) doesn't scroll. The CSS class is shared, which means the front side gets unnecessary `overflow-y: auto` harmless but not clean.
 
 ---
 
 ## Things Learned
 
 - A single `comparisonTable` reference object cannot be cleanly highlighted per-architecture without either forking the data or threading an `isActiveArch` prop through the table component. Data sharing has consequences at the presentation layer.
-- Fixed `min-h` values are fragile across multiple content layouts � when one category (Pros and Cons) needs 720px of vertical space but another (Overview) only needs 300px, you either waste space or risk clipping. Fluid min-heights with content-aware sizing would have been a better approach.
+- Fixed `min-h` values are fragile across multiple content layouts when one category (Pros and Cons) needs 720px of vertical space but another (Overview) only needs 300px, you either waste space or risk clipping. Fluid min-heights with content-aware sizing would have been a better approach.
 - Mouse-only interaction patterns (`onMouseEnter`/`onMouseLeave`) create an accessibility gap for touch users that cannot be patched with CSS alone. Touch devices have no hover state, so the entire glow/interaction layer is invisible to them. If we were to rebuild this, we would architect the state machine around `:focus-visible` and `:active` CSS pseudo-classes as the primary drivers, not JavaScript mouse events.
 - GitHub Pages deployment with Astro requires exact matching between the `base` path in `astro.config.mjs` and the repository name. The workflow's `configure-pages` action dynamically provides the correct origin and base path, which eliminates manual URL construction.
-- The `prefers-reduced-motion` media query needs to be checked both in CSS keyframes and in JavaScript � a single path is not enough. We used it in the `reveal()` helper and in the CircuitBoard SVG animations, but we also had to guard the CSS `@keyframes` with a `@media` block to prevent the animations from playing at all.
+- The `prefers-reduced-motion` media query needs to be checked both in CSS keyframes and in JavaScript a single path is not enough. We used it in the `reveal()` helper and in the CircuitBoard SVG animations, but we also had to guard the CSS `@keyframes` with a `@media` block to prevent the animations from playing at all.
 
 ---
 
