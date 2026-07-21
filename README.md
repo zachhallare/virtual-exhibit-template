@@ -84,6 +84,22 @@ Google Docs link below:
 
 [View Highlighted Revisions on Google Docs](https://docs.google.com/document/d/1aFv7ZEC7oXG_M5LDeyJp128cibDaMuXKnh5ud8JuTIg)
 
+![HIGHLIGHT1](assets/HIGHLIGHT1.png)
+
+*Revised to more accurately describe what computer architecture governs, as the original phrasing was too narrow and technically imprecise.*
+
+![HIGHLIGHT2](assets/HIGHLIGHT2.png)
+
+*Revised to better reflect the actual purpose of the project, which is a comparative study rather than a breakdown of ISA responsibilities.*
+
+![HIGHLIGHT3](assets/HIGHLIGHT3.png)
+
+*Reworded to better reflect the exhibit's goal of helping users make informed decisions rather than focusing on system design.*
+
+![HIGHLIGHT4](assets/HIGHLIGHT4.png)
+
+*Added a description of the animated comparison bars in the Performance category to clarify that the interactive element goes beyond static content display, directly addressing the feedback that the exhibit should not resemble a PowerPoint-like slide.*
+
 ---
 
 ## Previous Revision Comments
@@ -240,3 +256,131 @@ While Gemini helped us scaffold these complex animation patterns and layout stru
 #### Pros and Cons
 * Peila International. (2024). *Instruction set architecture breakdown: ARM vs x86*. Technical Articles. [Link](https://www.peila-international.com/blog/arm-vs-x86)
 * Ecstuff4u. (2023). *Pros and cons of x86 architecture*. Technical Blog. [Link](https://www.ecstuff4u.com/2023/06/pros-and-cons-of-x86.html)
+---
+# Final Submission Update: ARM vs x86 Interactive Explorer
+
+---
+
+## What's Been Done
+
+The Mid-Milestone checklist items were assessed against the final codebase. The following reflects what was completed, partially addressed, or left unresolved by the final submission.
+
+### Components Built
+
+| File | Description |
+| --- | --- |
+| `App.tsx` | Root component; manages routing between the Landing Page and Category Page using Framer Motion's `AnimatePresence` |
+| `LandingPage.tsx` | Entry screen with a custom SVG circuit board background, animated CPU chip icons for ARM and x86, and a VS badge � circuit traces glow in the architecture's accent color on hover |
+| `CategoryPage.tsx` | Post-selection screen displaying a 2x3 grid of `ChipButton` cards for six content categories; transitions to a flashcard view on selection, with a skeleton loading state on first mount |
+| `FlashcardDeck.tsx` | Flip-card component using CSS `preserve-3d` perspective and Framer Motion `rotateY` � front shows the architecture name, back shows the selected category's content |
+| `AnimatedBars.tsx` | Animated horizontal comparison bars driven by Framer Motion; ARM and x86 bars animate from 0% to their target width with a staggered delay on render |
+| `data.ts` | Centralized data file holding all architecture content (overview, performance metrics, use cases, key devices, pros/cons, comparison table) for both ARM and x86, typed with TypeScript interfaces |
+| `index.css` | Full design system � custom Tailwind v4 `@theme` tokens, `bg-pcb` PCB-grid background, skeleton shimmer keyframe, circuit-flow SVG animation, card trace animation, and dot/icon pulse effects |
+
+### Features Implemented vs. Mid-Milestone Checklist
+
+- **Responsive layout polish (320px screens):** COMPLETE. The flashcard enforces `min-h-[720px]` which forces vertical scrolling at small widths, with scrollbars intentionally hidden via `-ms-overflow-style: none` and `scrollbar-width: none`. The comparison table uses `min-w-[450px]` inside an `overflow-x-auto` wrapper � it scrolls horizontally but does not break layout. Performance bar labels use fixed `w-9` (36px) and `w-14` (56px) widths that may crowd the available space at 320px. *(File: `FlashcardDeck.tsx:48`, `AnimatedBars.tsx:26,43`, `CategoryPage.tsx:239`)*
+
+- **Comparison Table column highlight:** NOT IMPLEMENTED. Both `armData` and `x86Data` share the exact same `comparisonTable` array reference (`data.ts:22-32,81,132`). The `ComparisonTable` component renders both columns with hard-coded symmetrical colors (`CategoryPage.tsx:243-244`) and does not visually emphasize the active architecture's column.
+
+- **Accessibility review:** COMPLETE. Landing page chip buttons have `aria-label` attributes and `focus-visible:ring` styles (`LandingPage.tsx:397,424`). Gaps remain: ChipButton SVG trace/pins (`CategoryPage.tsx:91-102`), flashcard chip pins (`FlashcardDeck.tsx:11-18`), and the comparison table lack `aria-label` or `aria-hidden` attributes. The flashcard registers `Space`/`Enter` keyboard listeners at the `window` level (`FlashcardDeck.tsx:122-131`) but the card div itself has no `role="button"`, `tabIndex`, or focus ring, making it unreachable by tab navigation.
+
+- **Mobile touch behavior:** NOT IMPLEMENTED. All hover-driven glow states (ChipButton, HoverItem, ProsConsItem, LandingPage circuit board) rely exclusively on `onMouseEnter`/`onMouseLeave` handlers with no `onTouchStart`/`:active` CSS equivalents. On touchscreen devices, users will not see the border trace animation, chip pin glow, or accent border highlight. *(File: `CategoryPage.tsx:87-88,158-159,176-177`, `LandingPage.tsx:393-396,420-423`)*
+
+- **Live deployment:** COMPLETE. A GitHub Actions CI/CD pipeline (`.github/workflows/astro.yml`) builds and deploys the Astro site to GitHub Pages on every push to `main`. The `astro.config.mjs` correctly sets `site` and `base` for GitHub Pages deployment.
+
+- **Final animation and visual polish:** COMPLETE. All landing page elements use staggered entrance animations via the `reveal()` helper (`LandingPage.tsx:352-359`) except the main "ARM vs x86" heading (`LandingPage.tsx:373-375`), which appears immediately with no entrance animation. Framer Motion page transitions, CSS keyframe timing, and `prefers-reduced-motion` support are consistently applied across all components.
+
+---
+
+## Challenges
+
+- Making the comparison table column highlight work was difficult because both `armData` and `x86Data` share a single `comparisonTable` array reference. Adding a visual distinction would have required either duplicating the data or restructuring the `ComparisonTable` component to accept a separate highlighting prop � neither felt clean enough to commit to.
+- The `min-h-[720px]` on the flashcard body created a tension between having enough room for all content categories and fitting comfortably on a 320px-wide viewport. With six different category layouts (overview text, animated bars, use case lists, device cards, pros/cons grids, comparison table), finding a single height that worked for all without excessive empty space was not possible.
+- Touch-device hover states remained unresolved because the entire visual feedback system (border trace animation, chip pin glow, accent background tint, box-shadow glow) was architected around `mouseenter`/`mouseleave` events. Porting this to touch would have required either Framer Motion's `whileTap` variants or a touch-detection polyfill, neither of which mapped cleanly onto the existing `hovered` state pattern.
+- Hiding flashcard scrollbars to preserve the aesthetic meant that users on small screens cannot tell the content is scrollable. The trade-off between visual polish and discoverability was never fully resolved.
+- The back-to-categories button on the flashcard view receives no keyboard focus ring, and the flashcard itself cannot be tabbed to despite listening for keyboard events. Making the card focusable would have required restructuring its `div` as a `<button>` or adding `tabIndex` + `role="button"`, which conflicted with the Framer Motion `AnimatePresence` layout.
+
+---
+
+## Aha Moments
+
+- The GitHub Actions deployment was surprisingly simple to set up once we realized Astro's `astro.config.mjs` just needs `site` and `base` to match the GitHub Pages URL pattern � the `actions/deploy-pages@v5` action handles the rest.
+- We noticed that even though the comparison table column highlight wasn't implemented, the symmetrical design actually works well for side-by-side comparison. Both architectures get equal visual weight, and the hover row highlight still guides the eye.
+- The hidden scrollbar approach on the flashcard content isn't ideal for discoverability, but it does make the card look like a polished UI component rather than a raw scrollable container. On desktop the content fits without scrolling for most categories, so the tradeoff is only painful at 320px.
+- We realized late in the project that the `flashcard-content` overflow model works fine for the back-of-card content (which is always scrollable), but the front side (architecture name centered) doesn't scroll. The CSS class is shared, which means the front side gets unnecessary `overflow-y: auto` � harmless but not clean.
+
+---
+
+## Things Learned
+
+- A single `comparisonTable` reference object cannot be cleanly highlighted per-architecture without either forking the data or threading an `isActiveArch` prop through the table component. Data sharing has consequences at the presentation layer.
+- Fixed `min-h` values are fragile across multiple content layouts � when one category (Pros and Cons) needs 720px of vertical space but another (Overview) only needs 300px, you either waste space or risk clipping. Fluid min-heights with content-aware sizing would have been a better approach.
+- Mouse-only interaction patterns (`onMouseEnter`/`onMouseLeave`) create an accessibility gap for touch users that cannot be patched with CSS alone. Touch devices have no hover state, so the entire glow/interaction layer is invisible to them. If we were to rebuild this, we would architect the state machine around `:focus-visible` and `:active` CSS pseudo-classes as the primary drivers, not JavaScript mouse events.
+- GitHub Pages deployment with Astro requires exact matching between the `base` path in `astro.config.mjs` and the repository name. The workflow's `configure-pages` action dynamically provides the correct origin and base path, which eliminates manual URL construction.
+- The `prefers-reduced-motion` media query needs to be checked both in CSS keyframes and in JavaScript � a single path is not enough. We used it in the `reveal()` helper and in the CircuitBoard SVG animations, but we also had to guard the CSS `@keyframes` with a `@media` block to prevent the animations from playing at all.
+
+---
+
+## Disclosure on the Use of AI / LLM Tools
+
+No AI or LLM tools were used after the Mid-Milestone submission. All code in the final submission was written, reviewed, and tested by the team without any generative AI assistance.
+
+---
+
+## Final UI
+
+![UI-PIC1](assets/UI-PIC1.png)
+![UI-PIC2](assets/UI-PIC2.png)
+![UI-PIC3](assets/UI-PIC3.png)
+![UI-PIC4](assets/UI-PIC4.png)
+![UI-PIC5](assets/UI-PIC5.png)
+
+---
+
+## References
+
+### ARM Architecture
+
+#### Overview & Fundamentals
+* GeeksforGeeks. (2024). *ARM processor and its fundamental features*. Computer Organization and Architecture. [Link](https://www.geeksforgeeks.org/computer-organization-architecture/arm-processor-and-its-features/)
+
+#### Use Cases
+* Stromasys. (2024). *Tracking the structural rise of ARM processors*. Enterprise Hardware Resources. [Link](https://www.stromasys.com/resources/tracking-the-rise-of-arm-processors/)
+
+#### Key Devices
+* **Apple:** Apple Inc. (2024). *Apple A18 Pro chip overview*. Apple Newsroom. [Link](https://support.apple.com/en-ph/121031)
+* **Apple Watch:** Apple Inc. (2024). *Apple Watch technical specification matrix*. Apple Support. [Link](https://support.apple.com/en-ph/121202)
+* **Samsung:** Samsung. (2025). *Galaxy S25 Ultra hardware specifications*. Samsung Support. [Link](https://www.samsung.com/ph/smartphones/galaxy-s25-ultra/specs/)
+* **Google Pixel:** Google. (2025). *Tensor G5 capabilities inside Pixel 10*. Google Products Blog. [Link](https://blog.google/products-and-platforms/devices/pixel/tensor-g5-pixel-10/)
+* **AWS Graviton:** Amazon Web Services. (2024). *AWS Graviton processors*. AWS Documentation. [Link](https://newsroom.arm.com/blog/arm-aws-reinvent-2024)
+* **NVIDIA:** NVIDIA. (2024). *ARM Neoverse AE & NVIDIA next-gen automotive systems*. Arm Newsroom. [Link](https://newsroom.arm.com/news/arm-neoverse-ae-nvidia-next-gen-automotive-technologies)
+* **Tesla:** Electrek. (2021). *Tesla moves to AMD chip in new Model Y builds*. Electrek Transportation. [Link](https://electrek.co/2021/11/26/tesla-moves-amd-chip-new-model-y-china/)
+* **Tesla:** Electrek. (2025). *Tesla AI4 vs NVIDIA Thor: Autonomous hardware comparison*. Electrek Tech. [Link](https://electrek.co/2025/11/25/tesla-ai4-vs-nvidia-thor-reality-self-driving-computers/)
+
+#### Pros and Cons
+* GeeksforGeeks. (2024). *Advantages and disadvantages of the ARM processor*. Computer Organization and Architecture. [Link](https://www.geeksforgeeks.org/computer-organization-architecture/advantages-and-disadvantages-of-arm-processor/)
+
+#### Comparison Dataset
+* InnoAIoT. (2024). *The architectural difference between ARM and x86*. Tech Analysis. [Link](https://www.innoaiot.com/difference-between-arm-and-x86/)
+
+---
+
+### x86 Architecture
+
+#### Overview & Use Cases
+* Intel Corporation. (2024). *x86 architecture — The foundation of modern computing*. Intel Tech 101. [Link](https://newsroom.intel.com/tech101/x86-architecture-foundation-of-modern-computing)
+
+#### Key Devices
+* **Dell XPS 15:** Dell. (2024). *XPS 15 laptop configuration guidelines*. Dell Support. [Link](https://www.dell.com/en-us/shop/dell-laptops/xps-15-laptop/spd/xps-15-9530-laptop)
+* **ThinkPad X1 Carbon:** Lenovo. (2024). *ThinkPad X1 Carbon Gen 13 Aura Edition documentation*. Lenovo Support. [Link](https://www.lenovo.com/ph/en/p/laptops/thinkpad/thinkpadx1/thinkpad-x1-carbon-gen-13-aura-edition-14-inch-intel/len101t0108)
+* **ASUS ROG STRIX:** ASUS. (2024). *ROG Strix Series laptops*. ROG Global. [Link](https://rog.asus.com/laptops/rog-strix-series/?items=90843)
+* **HP Omen:** HP. (2024). *OMEN 45L high-performance desktop configurations*. HP Gaming. [Link](https://www.hp.com/us-en/gaming-pc/desktops/omen-45l-amd.html)
+* **Dell PowerEdge R760:** Dell. (2024). *PowerEdge R760 rack server details*. Dell Enterprise. [Link](https://www.dell.com/en-us/shop/cty/pdp/spd/poweredge-r760/pe_r760_tm_vi_vp_sb)
+* **HPE ProLiant:** Hewlett Packard Enterprise. (2024). *HPE ProLiant compute servers ecosystem*. HPE Documentation. [Link](https://www.hpe.com/emea_europe/en/compute/hpe-proliant-compute/dl385-gen11.html)
+* **Microsoft Azure HBv4:** Microsoft. (2024). *Azure HBv4-series high-performance compute specifications*. Azure Docs. [Link](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/high-performance-compute/hbv4-series?tabs=sizebasic)
+
+#### Pros and Cons
+* Peila International. (2024). *Instruction set architecture breakdown: ARM vs x86*. Technical Articles. [Link](https://www.peila-international.com/blog/arm-vs-x86)
+* Ecstuff4u. (2023). *Pros and cons of x86 architecture*. Technical Blog. [Link](https://www.ecstuff4u.com/2023/06/pros-and-cons-of-x86.html)
+---
