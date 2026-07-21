@@ -2,7 +2,7 @@
 
 **Website Link:** https://zachhallare.github.io/virtual-exhibit-template/arm_vs_x86/
 
-**GitHub Repository:** [https://github.com/zachhallare/virtual-exhibit-template]([https://github.com/zachhallare/virtual-exhibit-template)
+**GitHub Repository:** [GitHub Repository](https://github.com/zachhallare/virtual-exhibit-template)
 
 ## ARM vs x86: Interactive Architecture Explorer
 
